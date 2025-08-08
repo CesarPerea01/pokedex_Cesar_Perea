@@ -1,29 +1,56 @@
-<div class="grid grid-cols-6 grid-rows-5 gap-4">
-  <div class="row-span-5">1</div>
-  <mat-list>
-    <mat-list-item>Pepper</mat-list-item>
-    <mat-list-item>Salt</mat-list-item>
-    <mat-list-item>Paprika</mat-list-item>
-  </mat-list>
+<div class="grid grid-cols-6 gap-4 p-4">
+  <!-- Panel izquierdo: filtros -->
+  <div class="row-span-5 bg-gray-100 p-4 rounded-lg shadow">
+    <mat-list>
+      <mat-list-item
+        class="hover:cursor-pointer hover:scale-105 hover:bg-blue-200 transition duration-300 ease-in-out hover:rounded-md"
+        (click)="filterByType('all')"
+        >all</mat-list-item
+      >
+      @for (type of allTypes$ | async; track $index) {
+      <div
+        class="hover:cursor-pointer hover:scale-105 hover:bg-blue-200 transition duration-300 ease-in-out hover:rounded-md"
+      >
+        <mat-list-item (click)="filterByType(type)">{{ type }}</mat-list-item>
+      </div>
+      }
+    </mat-list>
+  </div>
+
+  <!-- Panel derecho: cards -->
   <div class="col-span-5 row-span-5">
-    <div class="col-span-2 row-span-2">
-      <mat-card class="example-card" appearance="outlined">
-        <mat-card-header>
-          <mat-card-title>Chihuahua</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            muchos dicen dique, bla bla bla ba ble ble ble ble, blu blu blu blu
-          </p>
-        </mat-card-content>
-        <mat-card-footer class="example-card-footer">
-          <!-- <mat-chip-set aria-label="Chihuahua traits">
-                <mat-chip>charming</mat-chip>
-                <mat-chip>graceful</mat-chip>
-                <mat-chip>sassy</mat-chip>
-              </mat-chip-set> -->
-        </mat-card-footer>
-      </mat-card>
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+    >
+      @for (pokemon of completeListFiltered; track $index) {
+      <div
+        class="p-4 shadow rounded-lg overflow-hidden hover:cursor-pointer hover:scale-105 hover:bg-slate-200 transition duration-300 ease-in-out"
+      >
+        <mat-card class="shadow rounded-lg overflow-hidden">
+          <mat-card-header class="text-2xl font-semibold">
+            <mat-card-title>{{ pokemon.name }}</mat-card-title>
+          </mat-card-header>
+          <img
+            mat-card-image
+            [src]="pokemon.sprites.other?.home?.front_default"
+            [alt]="pokemon.name"
+          />
+          <mat-card-content>
+            <p>Altura: {{ pokemon.height / 10 }} m.</p>
+            <p>Peso: {{ pokemon.weight / 10 }} kg.</p>
+          </mat-card-content>
+          <mat-card-footer class="p-2">
+            <mat-chip-set>
+              @for (type of pokemon.types; track $index) {
+              <mat-chip>
+                {{ type.type.name | titlecase }}
+              </mat-chip>
+              }
+            </mat-chip-set>
+          </mat-card-footer>
+        </mat-card>
+      </div>
+      }
     </div>
   </div>
 </div>
