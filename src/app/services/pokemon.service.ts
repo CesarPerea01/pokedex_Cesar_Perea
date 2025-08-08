@@ -2,7 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Pokemon } from '../interfaces/pokemon-main.interface';
-import { PokemonListResponse } from '../interfaces/pokemon-list.interface';
+import {
+  PokemonList,
+  PokemonListResponse,
+} from '../interfaces/pokemon-list.interface';
 import { DOCUMENT } from '@angular/common';
 @Injectable({
   providedIn: 'root',
@@ -13,9 +16,14 @@ export class PokemonService {
   private temporal = '?limit=100&offset=0';
 
   private _allTypes = new BehaviorSubject<string[]>([]);
+  private _weaknesses = new BehaviorSubject<PokemonList[]>([]);
 
   get allTypes$(): Observable<string[]> {
     return this._allTypes.asObservable();
+  }
+
+  get weaknesses$(): Observable<PokemonList[]> {
+    return this._weaknesses.asObservable();
   }
   constructor(private http: HttpClient) {}
 
@@ -25,8 +33,8 @@ export class PokemonService {
     );
   }
 
-  getByName(name: string): Observable<Pokemon> {
-    return this.http.get<Pokemon>(this.url + name);
+  getByName(param: string | number): Observable<Pokemon> {
+    return this.http.get<Pokemon>(this.url + param);
   }
 
   getTypes(): Observable<PokemonListResponse> {
@@ -37,7 +45,15 @@ export class PokemonService {
     );
   }
 
-  getImage(url: string): Observable<Blob> {
-    return this.http.get(url, { responseType: 'blob' });
+  getTypeWeaknesses(type: string): Observable<any> {
+    return this.http.get<any>(this.baseUrl + 'type/' + type).pipe(
+      tap((res) => {
+        this._weaknesses.next(res.damage_relations.double_damage_from);
+      })
+    );
+  }
+
+  getFlavourText(pokemon: string | number): Observable<any> {
+    return this.http.get<any>(this.baseUrl + 'pokemon-species/' + pokemon);
   }
 }

@@ -1,56 +1,64 @@
-<div class="grid grid-cols-6 gap-4 p-4">
-  <!-- Panel izquierdo: filtros -->
-  <div class="row-span-5 bg-gray-100 p-4 rounded-lg shadow">
-    <mat-list>
-      <mat-list-item
-        class="hover:cursor-pointer hover:scale-105 hover:bg-blue-200 transition duration-300 ease-in-out hover:rounded-md"
-        (click)="filterByType('all')"
-        >all</mat-list-item
-      >
-      @for (type of allTypes$ | async; track $index) {
-      <div
-        class="hover:cursor-pointer hover:scale-105 hover:bg-blue-200 transition duration-300 ease-in-out hover:rounded-md"
-      >
-        <mat-list-item (click)="filterByType(type)">{{ type }}</mat-list-item>
-      </div>
-      }
-    </mat-list>
+<div class="flex-row">
+  <div class="flex justify-center mt-2">
+    <mat-form-field class="flex w-2/3">
+      <mat-label>Search Pokemon</mat-label>
+      <input placeholder="Name" matInput type="text" />
+    </mat-form-field>
   </div>
+  <div class="grid grid-cols-6 gap-4 p-4">
+    <!-- Panel izquierdo: filtros -->
+    <div class="row-span-5 bg-gray-100 p-4 rounded-lg shadow">
+      <mat-list>
+        <mat-list-item
+          class="hover:cursor-pointer hover:scale-105 hover:bg-blue-200 transition duration-300 ease-in-out hover:rounded-md"
+          (click)="filterByType('all')"
+          >all</mat-list-item
+        >
+        @for (type of allTypes$ | async; track $index) {
+        <div
+          class="hover:cursor-pointer hover:scale-105 hover:bg-blue-200 transition duration-300 ease-in-out hover:rounded-md"
+        >
+          <mat-list-item (click)="filterByType(type)">{{ type }}</mat-list-item>
+        </div>
+        }
+      </mat-list>
+    </div>
 
-  <!-- Panel derecho: cards -->
-  <div class="col-span-5 row-span-5">
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-    >
-      @for (pokemon of completeListFiltered; track $index) {
+    <!-- Panel derecho: cards -->
+    <div class="col-span-5 row-span-5">
       <div
-        class="p-4 shadow rounded-lg overflow-hidden hover:cursor-pointer hover:scale-105 hover:bg-slate-200 transition duration-300 ease-in-out"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
       >
-        <mat-card class="shadow rounded-lg overflow-hidden">
-          <mat-card-header class="text-2xl font-semibold">
-            <mat-card-title>{{ pokemon.name }}</mat-card-title>
-          </mat-card-header>
-          <img
-            mat-card-image
-            [src]="pokemon.sprites.other?.home?.front_default"
-            [alt]="pokemon.name"
-          />
-          <mat-card-content>
-            <p>Altura: {{ pokemon.height / 10 }} m.</p>
-            <p>Peso: {{ pokemon.weight / 10 }} kg.</p>
-          </mat-card-content>
-          <mat-card-footer class="p-2">
-            <mat-chip-set>
-              @for (type of pokemon.types; track $index) {
-              <mat-chip>
-                {{ type.type.name | titlecase }}
-              </mat-chip>
-              }
-            </mat-chip-set>
-          </mat-card-footer>
-        </mat-card>
+        @for (pokemon of completeListFiltered; track $index) {
+        <div
+          class="p-4 shadow rounded-lg overflow-hidden hover:cursor-pointer hover:scale-105 hover:bg-slate-200 transition duration-300 ease-in-out"
+        >
+          <mat-card class="shadow rounded-lg overflow-hidden">
+            <mat-card-header class="text-2xl font-semibold">
+              <mat-card-title>{{ pokemon.name }}</mat-card-title>
+            </mat-card-header>
+            <img
+              mat-card-image
+              [src]="pokemon.sprites.other?.home?.front_default"
+              [alt]="pokemon.name"
+            />
+            <mat-card-content>
+              <p>Altura: {{ pokemon.height / 10 }} m.</p>
+              <p>Peso: {{ pokemon.weight / 10 }} kg.</p>
+            </mat-card-content>
+            <mat-card-footer class="p-2">
+              <mat-chip-set>
+                @for (type of pokemon.types; track $index) {
+                <mat-chip>
+                  {{ type.type.name | titlecase }}
+                </mat-chip>
+                }
+              </mat-chip-set>
+            </mat-card-footer>
+          </mat-card>
+        </div>
+        }
       </div>
-      }
     </div>
   </div>
 </div>

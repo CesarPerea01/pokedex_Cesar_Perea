@@ -7,10 +7,12 @@ import {
 import { MatCardFooter, MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule, MatPrefix } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIcon } from '@angular/material/icon';
 import { Observable, ReplaySubject } from 'rxjs';
 import { AsyncPipe, CommonModule, TitleCasePipe } from '@angular/common';
 import { Pokemon } from '../../interfaces/pokemon-main.interface';
-import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -22,6 +24,8 @@ import { ActivatedRoute, RouterLink, RouterModule } from '@angular/router';
     MatChipsModule,
     AsyncPipe,
     TitleCasePipe,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './pokemon-list.component.html',
   styleUrl: './pokemon-list.component.scss',
