@@ -13,6 +13,7 @@ import { MatIcon } from '@angular/material/icon';
 import { Observable, ReplaySubject } from 'rxjs';
 import { AsyncPipe, CommonModule, TitleCasePipe } from '@angular/common';
 import { Pokemon } from '../../interfaces/pokemon-main.interface';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -26,6 +27,7 @@ import { Pokemon } from '../../interfaces/pokemon-main.interface';
     TitleCasePipe,
     MatFormFieldModule,
     MatInputModule,
+    RouterModule,
   ],
   templateUrl: './pokemon-list.component.html',
   styleUrl: './pokemon-list.component.scss',

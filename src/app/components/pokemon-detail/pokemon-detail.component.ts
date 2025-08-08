@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PokemonService } from '../../services/pokemon.service';
 import { Observable, ReplaySubject } from 'rxjs';
 import { Pokemon } from '../../interfaces/pokemon-main.interface';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
@@ -11,6 +11,8 @@ import {
   PokemonList,
   PokemonListResponse,
 } from '../../interfaces/pokemon-list.interface';
+import { f } from '../../../../node_modules/@angular/material/icon-module.d-COXCrhrh';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-pokemon-detail',
@@ -21,6 +23,8 @@ import {
     AsyncPipe,
     MatChipsModule,
     MatProgressBarModule,
+    MatIcon,
+    RouterModule,
   ],
   templateUrl: './pokemon-detail.component.html',
   styleUrl: './pokemon-detail.component.scss',

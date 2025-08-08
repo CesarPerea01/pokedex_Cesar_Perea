@@ -6,13 +6,14 @@
 
 .low-stat .mdc-linear-progress__bar-inner {
   --mdc-linear-progress-active-indicator-color: #a30a1f;
-  --mdc-linear-progress-track-color: #f1f1f1;
+  --mdc-linear-progress-track-color: #000000;
 }
 .high-stat .mdc-linear-progress__bar-inner {
   --mdc-linear-progress-active-indicator-color: #06b91e;
-  --mdc-linear-progress-track-color: #ffffff;
+  --mdc-linear-progress-track-color: #000000;
+
 }
 .mid-stat .mdc-linear-progress__bar-inner {
   --mdc-linear-progress-active-indicator-color: #dbdb04;
-  --mdc-linear-progress-track-color: #ffffff;
+  --mdc-linear-progress-track-color: #000000;
 }

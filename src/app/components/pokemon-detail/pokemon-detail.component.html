@@ -5,7 +5,14 @@
   <div
     class="flex p-4 bg-white shadow rounded-lg overflow-hidden transition duration-300 ease-in-out h-3/4 w-3/4 mx-auto justify-around gap-4"
   >
-    <div class="flex rounded-lg bg-slate-500 h-full w-1/2"></div>
+    <div class="flex rounded-lg bg-slate-500 h-full w-1/2">
+      <a [routerLink]="['/']"><mat-icon class="">arrow_back</mat-icon></a>
+      <img
+        class="m-auto h-2/5 w-2/5"
+        [src]="pokemon.sprites.other?.home?.front_default"
+        [alt]="pokemon.name"
+      />
+    </div>
     <div class="rounded-lg h-full w-1/2">
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
         <mat-tab label="About">
@@ -24,6 +31,7 @@
               <p class="font-bold">Story</p>
               <p>{{ story }}</p>
             </div>
+            <div></div>
             <div>
               <p class="font-bold">Stats</p>
               @for (stat of pokemon.stats; track $index) {
