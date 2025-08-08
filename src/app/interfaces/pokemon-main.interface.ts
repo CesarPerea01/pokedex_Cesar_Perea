@@ -21,7 +21,9 @@ export interface Pokemon {
   weight: number;
 }
 
-export interface Cries {}
+export interface Cries {
+  [key: string]: string;
+}
 
 export interface Species {
   name: string;

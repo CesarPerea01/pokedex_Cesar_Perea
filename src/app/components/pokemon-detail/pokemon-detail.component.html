@@ -1,0 +1,52 @@
+<main
+  class="flex items-center justify-center h-screen w-screen bg-cover bg-center"
+  style="background-image: url('backgroundImage.jpg')"
+>
+  <div
+    class="flex p-4 bg-white shadow rounded-lg overflow-hidden transition duration-300 ease-in-out h-3/4 w-3/4 mx-auto justify-around gap-4"
+  >
+    <div class="flex rounded-lg bg-slate-500 h-full w-1/2"></div>
+    <div class="rounded-lg h-full w-1/2">
+      <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
+        <mat-tab label="About">
+          <div class="flex flex-col gap-4">
+            <div>
+              <p class="font-bold">Weaknesses</p>
+              <mat-chip-set>
+                @for (weakness of weaknesses$ | async; track $index) {
+                <mat-chip>
+                  {{ weakness.name | titlecase }}
+                </mat-chip>
+                }
+              </mat-chip-set>
+            </div>
+            <div>
+              <p class="font-bold">Story</p>
+              <p>{{ story }}</p>
+            </div>
+            <div>
+              <p class="font-bold">Stats</p>
+              @for (stat of pokemon.stats; track $index) {
+              <p class="font-semibold">
+                {{ stat.stat.name | titlecase }}: {{ stat.base_stat }}
+              </p>
+              <mat-progress-bar
+                class="gap-3"
+                mode="determinate"
+                [value]="stat.base_stat"
+                [ngClass]="{
+                  'low-stat': stat.base_stat < 40,
+                  'mid-stat': stat.base_stat >= 40 && stat.base_stat < 70,
+                  'high-stat': stat.base_stat >= 70
+                }"
+              ></mat-progress-bar>
+              }
+            </div>
+          </div>
+        </mat-tab>
+        <mat-tab label="Moves"><div></div></mat-tab>
+        <mat-tab label="Encounters"><div></div></mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</main>
