@@ -1,1 +1,100 @@
+@use "sass:color";
+.pokemon-chip-set {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+::ng-deep .mat-mdc-standard-chip {
+  height: auto !important; /* Que crezca con el contenido */
+  min-height: 40px;
+  white-space: normal !important;
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+
+.chip-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Colores personalizados */
+.chip-height {
+  background-color: #f4a261 !important;
+  color: white !important;
+}
+
+.chip-weight {
+  background-color: #2a9d8f !important;
+  color: white !important;
+}
+
+.chip-ability {
+  background-color: #264653 !important;
+  color: white !important;
+}
+
+
+$poke-type-colors: (
+  normal:    #A8A77A,
+  fire:      #EE8130,
+  water:     #6390F0,
+  electric:  #F7D02C,
+  grass:     #7AC74C,
+  ice:       #96D9D6,
+  fighting:  #C22E28,
+  poison:    #A33EA1,
+  ground:    #E2BF65,
+  flying:    #A98FF3,
+  psychic:   #F95587,
+  bug:       #A6B91A,
+  rock:      #B6A136,
+  ghost:     #735797,
+  dragon:    #6F35FC,
+  dark:      #705746,
+  steel:     #B7B7CE,
+  fairy:     #D685AD
+);
+
+
+@each $type, $base in $poke-type-colors {
+  .chip-#{$type} {
+    background: linear-gradient(
+      135deg,
+      color.scale($base, $lightness: 15%), /* más claro */
+      color.scale($base, $lightness: -15%) /* más oscuro */
+    );
+    color: white !important;
+    font-weight: bold;
+    text-transform: capitalize;
+    border-radius: 8px;
+    padding: 6px 12px;
+    height: auto !important;
+    min-height: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    white-space: normal !important;
+  }
+}
+
+@each $type, $base in $poke-type-colors {
+  :host ::ng-deep .type-#{$type} {
+    background: linear-gradient(
+      135deg,
+      rgba(color.scale($base, $lightness: 60%, $saturation: 30%), 0.95),
+      rgba(color.scale($base, $lightness: -40%, $saturation: -20%), 0.95)
+    );
+    color: white;
+    border-radius: 16px;
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  }
+}
+
 

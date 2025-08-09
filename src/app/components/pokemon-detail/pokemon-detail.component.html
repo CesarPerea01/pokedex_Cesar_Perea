@@ -5,23 +5,69 @@
   <div
     class="flex p-4 bg-white shadow rounded-lg overflow-hidden transition duration-300 ease-in-out h-3/4 w-3/4 mx-auto justify-around gap-4"
   >
-    <div class="flex rounded-lg bg-slate-500 h-full w-1/2">
-      <a [routerLink]="['/']"><mat-icon class="">arrow_back</mat-icon></a>
+    <div
+      class="flex flex-col rounded-lg h-full w-1/2 p-4 type-{{
+        pokemon.types[0].type.name
+      }}"
+    >
+      <div class="flex items-center justify-between mb-4">
+        <!-- Back Button -->
+        <div
+          class="flex items-center gap-2 cursor-pointer"
+          [routerLink]="['/']"
+        >
+          <mat-icon>arrow_back</mat-icon>
+          <span class="text-white font-semibold">PokeDex</span>
+        </div>
+
+        <!-- Show Shiny -->
+        <mat-icon
+          class="text-yellow-400 cursor-pointer"
+          (mouseenter)="showSiny = true"
+          (mouseleave)="showSiny = false"
+        >
+          auto_awesome
+        </mat-icon>
+      </div>
+
+      <!-- Nombre del Pokémon -->
+      <h2 class="text-center text-2xl font-bold text-white mb-4">
+        {{ pokemon.name | titlecase }}
+      </h2>
+
+      <!-- Main Image -->
       <img
-        class="m-auto h-2/5 w-2/5"
-        [src]="pokemon.sprites.other?.home?.front_default"
+        class="m-auto h-2/5 w-2/5 object-contain"
+        [src]="
+          showSiny
+            ? pokemon.sprites.other?.home?.front_shiny
+            : pokemon.sprites.other?.home?.front_default
+        "
         [alt]="pokemon.name"
       />
+
+      <!-- Evolution Chain -->
+      <div class="flex items-center justify-center gap-2 mt-6">
+        @for (evolution of evolutionChainImages; track $index) {
+        <img
+          class="h-20 w-20 object-cover rounded-full border-2 border-white"
+          [src]="evolutionChainImages[$index].front_default"
+          [alt]="evolutionChainImages[$index].name"
+        />
+        @if ($index < evolutionChainImages.length - 1) {
+        <mat-icon class="text-white">arrow_forward</mat-icon>
+        } }
+      </div>
     </div>
     <div class="rounded-lg h-full w-1/2">
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
         <mat-tab label="About">
-          <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-4 p-12">
             <div>
               <p class="font-bold">Weaknesses</p>
               <mat-chip-set>
                 @for (weakness of weaknesses$ | async; track $index) {
-                <mat-chip>
+                <mat-chip [ngClass]="'chip-' + weakness.name">
                   {{ weakness.name | titlecase }}
                 </mat-chip>
                 }
@@ -31,7 +77,33 @@
               <p class="font-bold">Story</p>
               <p>{{ story }}</p>
             </div>
-            <div></div>
+            <div>
+              <mat-chip-set class="pokemon-chip-set">
+                <mat-chip class="chip-height">
+                  <div class="chip-content">
+                    <p class="font-bold text-sm">Height</p>
+                    <p class="text-base">{{ pokemon.height / 10 }} m.</p>
+                  </div>
+                </mat-chip>
+
+                <mat-chip class="chip-weight">
+                  <div class="chip-content">
+                    <p class="font-bold text-sm">Weight</p>
+                    <p class="text-base">{{ pokemon.weight / 10 }} kg.</p>
+                  </div>
+                </mat-chip>
+                @for (ability of pokemon.abilities; track $index) {
+                <mat-chip class="chip-ability">
+                  <div class="chip-content">
+                    <p class="font-bold text-sm">Ability</p>
+                    <p class="text-base">
+                      {{ ability.ability.name | titlecase }}
+                    </p>
+                  </div>
+                </mat-chip>
+                }
+              </mat-chip-set>
+            </div>
             <div>
               <p class="font-bold">Stats</p>
               @for (stat of pokemon.stats; track $index) {
@@ -52,7 +124,20 @@
             </div>
           </div>
         </mat-tab>
-        <mat-tab label="Moves"><div></div></mat-tab>
+        <mat-tab label="Moves"
+          ><div class="p-4">
+            <h3 class="text-lg font-bold mb-4">Moves</h3>
+            <div
+              class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2"
+            >
+              @for (move of pokemon.moves | slice: 0:20; track $index) {
+              <mat-chip class="cursor-default">
+                {{ move.move.name | titlecase }}
+              </mat-chip>
+              }
+            </div>
+          </div></mat-tab
+        >
         <mat-tab label="Encounters"><div></div></mat-tab>
       </mat-tab-group>
     </div>

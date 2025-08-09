@@ -7,13 +7,14 @@ import {
   PokemonListResponse,
 } from '../interfaces/pokemon-list.interface';
 import { DOCUMENT } from '@angular/common';
+import { PokemonEvolutionChain } from '../interfaces/pokemon-evolution-chain';
 @Injectable({
   providedIn: 'root',
 })
 export class PokemonService {
   private baseUrl = 'https://pokeapi.co/api/v2/';
   private url = 'https://pokeapi.co/api/v2/pokemon/';
-  private temporal = '?limit=100&offset=0';
+  private temporal = '?limit=151&offset=0';
 
   private _allTypes = new BehaviorSubject<string[]>([]);
   private _weaknesses = new BehaviorSubject<PokemonList[]>([]);
@@ -53,7 +54,11 @@ export class PokemonService {
     );
   }
 
-  getFlavourText(pokemon: string | number): Observable<any> {
+  getSpecies(pokemon: string | number): Observable<any> {
     return this.http.get<any>(this.baseUrl + 'pokemon-species/' + pokemon);
+  }
+
+  getEvolutionChain(url: string): Observable<PokemonEvolutionChain> {
+    return this.http.get<PokemonEvolutionChain>(url);
   }
 }

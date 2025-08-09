@@ -12,13 +12,15 @@
         <mat-list-item
           class="hover:cursor-pointer hover:scale-105 hover:bg-blue-200 transition duration-300 ease-in-out hover:rounded-md"
           (click)="filterByType('all')"
-          >all</mat-list-item
+          >All</mat-list-item
         >
         @for (type of allTypes$ | async; track $index) {
         <div
           class="hover:cursor-pointer hover:scale-105 hover:bg-blue-200 transition duration-300 ease-in-out hover:rounded-md"
         >
-          <mat-list-item (click)="filterByType(type)">{{ type }}</mat-list-item>
+          <mat-list-item (click)="filterByType(type)">{{
+            type | titlecase
+          }}</mat-list-item>
         </div>
         }
       </mat-list>
@@ -36,7 +38,7 @@
           >
             <mat-card class="shadow rounded-lg overflow-hidden">
               <mat-card-header class="text-2xl font-semibold">
-                <mat-card-title>{{ pokemon.name }}</mat-card-title>
+                <mat-card-title>{{ pokemon.name | titlecase }}</mat-card-title>
               </mat-card-header>
               <img
                 mat-card-image
