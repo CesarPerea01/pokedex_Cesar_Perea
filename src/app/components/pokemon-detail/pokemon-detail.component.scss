@@ -6,11 +6,17 @@
 }
 
 ::ng-deep .mat-mdc-standard-chip {
-  height: auto !important; /* Que crezca con el contenido */
+  height: auto !important;
   min-height: 40px;
   white-space: normal !important;
-  border-radius: 8px;
   padding: 6px 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.3s ease;
+  border-radius: 12px;
+}
+
+::ng-deep .mat-mdc-standard-chip:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .chip-content {
@@ -22,7 +28,7 @@
 
 /* Colores personalizados */
 .chip-height {
-  background-color: #f4a261 !important;
+  background-color: #f19346 !important;
   color: white !important;
 }
 
@@ -32,7 +38,7 @@
 }
 
 .chip-ability {
-  background-color: #264653 !important;
+  background-color: #4a7f94 !important;
   color: white !important;
 }
 
@@ -63,8 +69,8 @@ $poke-type-colors: (
   .chip-#{$type} {
     background: linear-gradient(
       135deg,
-      color.scale($base, $lightness: 15%), /* más claro */
-      color.scale($base, $lightness: -15%) /* más oscuro */
+      color.scale($base, $lightness: 50%),
+      color.scale($base, $lightness: -50%)
     );
     color: white !important;
     font-weight: bold;
@@ -84,7 +90,7 @@ $poke-type-colors: (
   :host ::ng-deep .type-#{$type} {
     background: linear-gradient(
       135deg,
-      rgba(color.scale($base, $lightness: 60%, $saturation: 30%), 0.95),
+      rgba(color.scale($base, $lightness: 60%, $saturation: 80%), 0.95),
       rgba(color.scale($base, $lightness: -40%, $saturation: -20%), 0.95)
     );
     color: white;
