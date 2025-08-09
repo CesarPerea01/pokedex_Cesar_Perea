@@ -52,7 +52,7 @@
               <mat-card-footer class="p-2">
                 <mat-chip-set>
                   @for (type of pokemon.types; track $index) {
-                  <mat-chip>
+                  <mat-chip [ngClass]="'chip-' + type.type.name">
                     {{ type.type.name | titlecase }}
                   </mat-chip>
                   }
