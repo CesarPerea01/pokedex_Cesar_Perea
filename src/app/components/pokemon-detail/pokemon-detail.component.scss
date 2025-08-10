@@ -26,7 +26,7 @@
   align-items: center;
 }
 
-/* Colores personalizados */
+/* custom colors */
 .chip-height {
   background-color: #f19346 !important;
   color: white !important;
@@ -42,28 +42,26 @@
   color: white !important;
 }
 
-
 $poke-type-colors: (
-  normal:    #A8A77A,
-  fire:      #EE8130,
-  water:     #6390F0,
-  electric:  #F7D02C,
-  grass:     #7AC74C,
-  ice:       #96D9D6,
-  fighting:  #C22E28,
-  poison:    #A33EA1,
-  ground:    #E2BF65,
-  flying:    #A98FF3,
-  psychic:   #F95587,
-  bug:       #A6B91A,
-  rock:      #B6A136,
-  ghost:     #735797,
-  dragon:    #6F35FC,
-  dark:      #705746,
-  steel:     #B7B7CE,
-  fairy:     #D685AD
+  normal: #a8a77a,
+  fire: #ee8130,
+  water: #6390f0,
+  electric: #f7d02c,
+  grass: #7ac74c,
+  ice: #96d9d6,
+  fighting: #c22e28,
+  poison: #a33ea1,
+  ground: #e2bf65,
+  flying: #a98ff3,
+  psychic: #f95587,
+  bug: #a6b91a,
+  rock: #b6a136,
+  ghost: #735797,
+  dragon: #6f35fc,
+  dark: #705746,
+  steel: #b7b7ce,
+  fairy: #d685ad,
 );
-
 
 @each $type, $base in $poke-type-colors {
   .chip-#{$type} {
@@ -99,8 +97,6 @@ $poke-type-colors: (
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
   }
 }
-
-

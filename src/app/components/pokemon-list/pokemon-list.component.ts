@@ -9,11 +9,13 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule, MatPrefix } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatIcon } from '@angular/material/icon';
+import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { Observable, ReplaySubject } from 'rxjs';
 import { AsyncPipe, CommonModule, TitleCasePipe } from '@angular/common';
 import { Pokemon } from '../../interfaces/pokemon-main.interface';
 import { RouterModule } from '@angular/router';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { f } from '../../../../node_modules/@angular/material/icon-module.d-COXCrhrh';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -28,16 +30,21 @@ import { RouterModule } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     RouterModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatPrefix,
   ],
   templateUrl: './pokemon-list.component.html',
   styleUrl: './pokemon-list.component.scss',
 })
 export class PokemonListComponent implements OnInit {
+  searchControl = new FormControl('');
   unsubscribe$ = new ReplaySubject<void>();
   public allTypes$: Observable<string[]>;
 
   public pokemonList: PokemonList[] = [];
   public pokemonCompleteList: Pokemon[] = [];
+  public pokemonFilteredByType: Pokemon[] = [];
   public completeListFiltered: Pokemon[] = [];
   constructor(private pokemonService: PokemonService) {
     this.allTypes$ = this.pokemonService.allTypes$;
@@ -46,6 +53,7 @@ export class PokemonListComponent implements OnInit {
   ngOnInit() {
     this.loadMainPokemons();
     this.loadTypes();
+    this.searchPokemon();
   }
 
   ngOnDestroy(): void {
@@ -87,15 +95,20 @@ export class PokemonListComponent implements OnInit {
   }
 
   filterByType(typeToFilter: string) {
-    switch (typeToFilter) {
-      case 'all':
-        this.completeListFiltered = this.pokemonCompleteList;
-        break;
-      default:
-        this.completeListFiltered = this.pokemonCompleteList.filter((pokemon) =>
-          pokemon.types.find((type) => type.type.name === typeToFilter)
-        );
-        break;
+    if (typeToFilter === 'all') {
+      this.pokemonFilteredByType = [...this.pokemonCompleteList];
+    } else {
+      this.pokemonFilteredByType = this.pokemonCompleteList.filter((pokemon) =>
+        pokemon.types.find((type) => type.type.name === typeToFilter)
+      );
+    }
+
+    this.completeListFiltered = [...this.pokemonFilteredByType];
+    const currentSearch = this.searchControl.value || '';
+    if (currentSearch) {
+      this.completeListFiltered = this.pokemonFilteredByType.filter((pokemon) =>
+        pokemon.name.toLowerCase().includes(currentSearch.toLowerCase())
+      );
     }
   }
   shuffle<T>(array: T[]): T[] {
@@ -114,5 +127,14 @@ export class PokemonListComponent implements OnInit {
     }
 
     return copy;
+  }
+
+  searchPokemon() {
+    this.searchControl.valueChanges.subscribe((value) => {
+      const searchTerm = value?.toLowerCase() || '';
+      this.completeListFiltered = this.pokemonFilteredByType.filter((pokemon) =>
+        pokemon.name.toLowerCase().includes(searchTerm)
+      );
+    });
   }
 }

@@ -3,17 +3,43 @@
 @tailwind components;
 @tailwind utilities;
 
+// .low-stat .mdc-linear-progress__bar-inner {
+//   --mdc-linear-progress-active-indicator-color: #a30a1f;
+//   --mdc-linear-progress-track-color: #000000;
+// }
+// .high-stat .mdc-linear-progress__bar-inner {
+//   --mdc-linear-progress-active-indicator-color: #06b91e;
+//   --mdc-linear-progress-track-color: #000000;
+
+// }
+// .mid-stat .mdc-linear-progress__bar-inner {
+//   --mdc-linear-progress-active-indicator-color: #dbdb04;
+//   --mdc-linear-progress-track-color: #000000;
+// }
 
 .low-stat .mdc-linear-progress__bar-inner {
-  --mdc-linear-progress-active-indicator-color: #a30a1f;
-  --mdc-linear-progress-track-color: #000000;
+  border-color: #ef4444 !important;
 }
-.high-stat .mdc-linear-progress__bar-inner {
-  --mdc-linear-progress-active-indicator-color: #06b91e;
-  --mdc-linear-progress-track-color: #000000;
 
-}
 .mid-stat .mdc-linear-progress__bar-inner {
-  --mdc-linear-progress-active-indicator-color: #dbdb04;
-  --mdc-linear-progress-track-color: #000000;
+  border-color: #facc15 !important;
+}
+
+.high-stat .mdc-linear-progress__bar-inner {
+  border-color: #22c55e !important;
+}
+
+.mat-mdc-progress-bar {
+  height: 14px !important;
+  border-radius: 2px;
+}
+
+.mat-mdc-progress-bar .mdc-linear-progress__buffer {
+  height: 14px !important;
+}
+
+.mdc-linear-progress__bar,
+.mdc-linear-progress__bar-inner {
+  height: 14px !important;
+  border-radius: 8px;
 }

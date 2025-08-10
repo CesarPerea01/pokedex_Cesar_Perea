@@ -1,8 +1,14 @@
 <div class="flex-row">
   <div class="flex justify-center mt-2">
     <mat-form-field class="flex w-2/3">
+      <mat-icon matPrefix>search</mat-icon>
       <mat-label>Search Pokemon</mat-label>
-      <input placeholder="Name" matInput type="text" />
+      <input
+        [formControl]="searchControl"
+        placeholder="Name"
+        matInput
+        type="text"
+      />
     </mat-form-field>
   </div>
   <div class="grid grid-cols-6 gap-4 p-4">

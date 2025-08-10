@@ -151,7 +151,7 @@
               <p class="font-bold">Stats</p>
               @for (stat of pokemon.stats; track $index) {
               <p class="font-semibold">
-                {{ stat.stat.name | titlecase }}: {{ stat.base_stat }}
+                {{ stat.stat.name | uppercase }}: {{ stat.base_stat }}
               </p>
               <mat-progress-bar
                 class="gap-3"
@@ -174,7 +174,7 @@
               class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2"
             >
               @for (move of pokemon.moves | slice: 0:20; track $index) {
-              <mat-chip class="cursor-default">
+              <mat-chip class="cursor-default .mat-mdc-standard-chip">
                 {{ move.move.name | titlecase }}
               </mat-chip>
               }
