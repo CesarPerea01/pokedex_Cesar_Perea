@@ -10,34 +10,65 @@
         pokemon.types[0].type.name
       }}"
     >
-      <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center justify-between">
         <!-- Back Button -->
         <div
           class="flex items-center gap-2 cursor-pointer"
           [routerLink]="['/']"
         >
-          <mat-icon>arrow_back</mat-icon>
-          <span class="text-white font-semibold">PokeDex</span>
+          <mat-icon style="color: #4285f4">arrow_back</mat-icon>
+          <span class="text-black text-lg font-bold">PokeDex</span>
         </div>
 
-        <!-- Show Shiny -->
-        <mat-icon
-          class="text-yellow-400 cursor-pointer"
-          (mouseenter)="showSiny = true"
-          (mouseleave)="showSiny = false"
-        >
-          auto_awesome
-        </mat-icon>
+        <div class="flex items-center gap-4">
+          <!-- Show Shiny -->
+          <mat-icon
+            class="text-yellow-400 cursor-pointer hover:text-yellow-600"
+            (mouseenter)="showSiny = true"
+            (mouseleave)="showSiny = false"
+          >
+            auto_awesome
+          </mat-icon>
+          <!-- Play Cry -->
+          <mat-icon
+            class="text-blue-500 cursor-pointer"
+            (click)="playCry(cry)"
+            [ngClass]="{ 'text-red-500': !cry }"
+          >
+            volume_up
+          </mat-icon>
+        </div>
       </div>
 
-      <!-- Nombre del Pokémon -->
-      <h2 class="text-center text-2xl font-bold text-white mb-4">
-        {{ pokemon.name | titlecase }}
-      </h2>
+      <!-- Name and type-->
+      <div class="flex gap-3 mt-[-8px] justify-center items-center">
+        <h2 class="text-3xl font-bold text-black capitalize">
+          {{ pokemon.name | titlecase }}
+        </h2>
+        <p class="text-xl font-sans text-gray-700">#{{ pokemon.id }}</p>
+      </div>
+
+      <div class="flex justify-center items-center mt-2">
+        <mat-chip-set>
+          <mat-chip class="chip-height">
+            <div class="chip-content">
+              <p class="font-bold text-sm">Height</p>
+              <p class="text-base">{{ pokemon.height / 10 }} m.</p>
+            </div>
+          </mat-chip>
+
+          <mat-chip class="chip-weight">
+            <div class="chip-content">
+              <p class="font-bold text-sm">Weight</p>
+              <p class="text-base">{{ pokemon.weight / 10 }} kg.</p>
+            </div>
+          </mat-chip>
+        </mat-chip-set>
+      </div>
 
       <!-- Main Image -->
       <img
-        class="m-auto h-2/5 w-2/5 object-contain"
+        class="self-center h-[50%] w-[50%] object-contain m-4"
         [src]="
           showSiny
             ? pokemon.sprites.other?.home?.front_shiny
@@ -47,18 +78,33 @@
       />
 
       <!-- Evolution Chain -->
-      <div class="flex items-center justify-center gap-2 mt-6">
+      <div class="flex items-center justify-center gap-4 mt-6">
         @for (evolution of evolutionChainImages; track $index) {
-        <img
-          class="h-20 w-20 object-cover rounded-full border-2 border-white"
-          [src]="evolutionChainImages[$index].front_default"
-          [alt]="evolutionChainImages[$index].name"
-        />
+        <div class="flex flex-col items-center w-40">
+          <a [routerLink]="['/pokemon', evolution.id]">
+            <img
+              class="h-20 w-20 object-cover rounded-full border-2 border-black"
+              [src]="evolution.front_default"
+              [alt]="evolution.name"
+          /></a>
+          <p class="text-white text-sm font-semibold mt-1">
+            {{ evolution.name | titlecase }}
+          </p>
+          <div class="flex flex-nowrap justify-center mt-1 gap-1">
+            @for (type of evolution.types; track $index) {
+            <mat-chip class="mt-1 text-white" [ngClass]="'chip-' + type">
+              {{ type | titlecase }}
+            </mat-chip>
+            }
+          </div>
+        </div>
+
         @if ($index < evolutionChainImages.length - 1) {
         <mat-icon class="text-white">arrow_forward</mat-icon>
         } }
       </div>
     </div>
+    <!-- Details Section -->
     <div class="rounded-lg h-full w-1/2">
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
         <mat-tab label="About">
@@ -79,20 +125,17 @@
             </div>
             <div>
               <mat-chip-set class="pokemon-chip-set">
-                <mat-chip class="chip-height">
+                @for (type of pokemon.types; track $index) {
+                <mat-chip
+                  class="chip-height"
+                  [ngClass]="'chip-' + type.type.name"
+                >
                   <div class="chip-content">
-                    <p class="font-bold text-sm">Height</p>
-                    <p class="text-base">{{ pokemon.height / 10 }} m.</p>
+                    <p class="font-bold text-sm">Type</p>
+                    <p class="text-base">{{ type.type.name }}</p>
                   </div>
                 </mat-chip>
-
-                <mat-chip class="chip-weight">
-                  <div class="chip-content">
-                    <p class="font-bold text-sm">Weight</p>
-                    <p class="text-base">{{ pokemon.weight / 10 }} kg.</p>
-                  </div>
-                </mat-chip>
-                @for (ability of pokemon.abilities; track $index) {
+                } @for (ability of pokemon.abilities; track $index) {
                 <mat-chip class="chip-ability">
                   <div class="chip-content">
                     <p class="font-bold text-sm">Ability</p>

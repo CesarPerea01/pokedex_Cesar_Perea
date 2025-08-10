@@ -87,7 +87,6 @@ export class PokemonListComponent implements OnInit {
   }
 
   filterByType(typeToFilter: string) {
-    console.log(typeToFilter);
     switch (typeToFilter) {
       case 'all':
         this.completeListFiltered = this.pokemonCompleteList;
