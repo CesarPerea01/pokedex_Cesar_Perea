@@ -16,7 +16,7 @@
     <div class="row-span-5 bg-gray-100 p-4 rounded-lg shadow">
       <mat-list>
         <mat-list-item
-          class="hover:cursor-pointer hover:scale-105 hover:bg-blue-200 transition duration-300 ease-in-out hover:rounded-md"
+          class="font-semibold hover:cursor-pointer hover:scale-105 hover:bg-blue-200 transition duration-300 ease-in-out hover:rounded-md"
           (click)="filterByType('all')"
           >All</mat-list-item
         >
@@ -24,9 +24,12 @@
         <div
           class="hover:cursor-pointer hover:scale-105 hover:bg-blue-200 transition duration-300 ease-in-out hover:rounded-md"
         >
-          <mat-list-item (click)="filterByType(type)">{{
-            type | titlecase
-          }}</mat-list-item>
+          <mat-list-item
+            [ngClass]="'type-text-' + type"
+            class="font-semibold"
+            (click)="filterByType(type)"
+            >{{ type | titlecase }}</mat-list-item
+          >
         </div>
         }
       </mat-list>
