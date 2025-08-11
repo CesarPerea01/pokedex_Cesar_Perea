@@ -3,10 +3,10 @@
   style="background-image: url('backgroundImage.jpg')"
 >
   <div
-    class="flex p-4 bg-white shadow rounded-lg overflow-hidden transition duration-300 ease-in-out h-3/4 w-3/4 mx-auto justify-around gap-4"
+    class="flex p-4 bg-white shadow rounded-lg overflow-auto transition duration-300 ease-in-out h-3/4 w-3/4 mx-auto justify-around gap-4"
   >
     <div
-      class="flex flex-col rounded-lg h-full w-1/2 p-4 type-{{
+      class="overflow-auto flex flex-col rounded-lg h-full w-1/2 p-4 type-{{
         pokemon.types[0].type.name
       }}"
     >
@@ -115,7 +115,7 @@
       </div>
     </div>
     <!-- Details Section -->
-    <div class="rounded-lg h-full w-1/2">
+    <div class="overflow-auto rounded-lg h-full w-1/2">
       <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center">
         <mat-tab label="About">
           <div class="flex flex-col gap-4 p-6">
@@ -184,8 +184,12 @@
               class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2"
             >
               @for (move of pokemon.moves | slice: 0:20; track $index) {
-              <mat-chip class="cursor-default .mat-mdc-standard-chip">
-                {{ move.move.name | titlecase }}
+              <mat-chip
+                class="cursor-default .mat-mdc-standard-chip justify-center"
+              >
+                <div class="chip-content">
+                  {{ move.move.name | titlecase }}
+                </div>
               </mat-chip>
               }
             </div>
