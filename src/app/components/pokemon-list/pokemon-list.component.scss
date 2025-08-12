@@ -63,7 +63,7 @@ $poke-type-colors: (
 
 @each $type, $base in $poke-type-colors {
   .type-text-#{$type} {
-    color: color.scale($base, $lightness: -20%); // color de texto
+    color: color.scale($base, $lightness: -20%);
     font-weight: bold;
     text-transform: capitalize;
   }
