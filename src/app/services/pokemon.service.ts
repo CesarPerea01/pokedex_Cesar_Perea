@@ -19,6 +19,8 @@ export class PokemonService {
   private _allTypes = new BehaviorSubject<string[]>([]);
   private _weaknesses = new BehaviorSubject<PokemonList[]>([]);
 
+  public selectedType = 'all';
+
   get allTypes$(): Observable<string[]> {
     return this._allTypes.asObservable();
   }

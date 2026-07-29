@@ -85,16 +85,17 @@ export class PokemonListComponent implements OnInit {
       this.pokemonService.getByName(pokemon.name).subscribe({
         next: (response: Pokemon) => {
           this.pokemonCompleteList.push(response);
+          this.filterByType(this.pokemonService.selectedType);
         },
         error: (error: any) => {
           console.log(error);
         },
       });
-      this.completeListFiltered = this.pokemonCompleteList;
     });
   }
 
   filterByType(typeToFilter: string) {
+    this.pokemonService.selectedType = typeToFilter;
     if (typeToFilter === 'all') {
       this.pokemonFilteredByType = [...this.pokemonCompleteList];
     } else {
